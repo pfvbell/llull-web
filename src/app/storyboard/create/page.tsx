@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Storyboard, StoryboardScene } from '@/types/index';
 import { supabase } from '@/lib/supabase';
@@ -10,7 +10,8 @@ const log = (message: string, data?: any) => {
   console.log(`[StoryboardCreate] ${message}`, data ? data : '');
 };
 
-export default function StoryboardCreate() {
+// Content component that uses search params
+function StoryboardCreateContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [storyboard, setStoryboard] = useState<Storyboard | null>(null);
@@ -400,5 +401,23 @@ export default function StoryboardCreate() {
         </button>
       </div>
     </div>
+  );
+}
+
+// Loading fallback component 
+function StoryboardLoading() {
+  return (
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+  );
+}
+
+// Main page component with Suspense
+export default function StoryboardCreate() {
+  return (
+    <Suspense fallback={<StoryboardLoading />}>
+      <StoryboardCreateContent />
+    </Suspense>
   );
 } 

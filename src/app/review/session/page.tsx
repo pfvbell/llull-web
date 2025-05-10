@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ReviewSession from '@/components/ReviewSession';
 
@@ -9,7 +9,8 @@ const log = (message: string, data?: any) => {
   console.log(`[ReviewSessionPage] ${message}`, data ? data : '');
 };
 
-export default function ReviewSessionPage() {
+// Content component that uses search params
+function ReviewSessionContent() {
   const [limit, setLimit] = useState<number>(5);
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -48,5 +49,26 @@ export default function ReviewSessionPage() {
       <h1 className="text-2xl font-bold mt-8 mb-6 text-center">Review Session</h1>
       <ReviewSession initialLimit={limit} onComplete={handleComplete} />
     </div>
+  );
+}
+
+// Loading fallback component
+function ReviewSessionLoading() {
+  return (
+    <div className="container mx-auto">
+      <h1 className="text-2xl font-bold mt-8 mb-6 text-center">Review Session</h1>
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    </div>
+  );
+}
+
+// Main page component with Suspense
+export default function ReviewSessionPage() {
+  return (
+    <Suspense fallback={<ReviewSessionLoading />}>
+      <ReviewSessionContent />
+    </Suspense>
   );
 } 

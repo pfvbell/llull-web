@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { MultipleChoiceQuestion } from '@/types/index';
 import MultipleChoiceEditor from '@/components/MultipleChoiceEditor';
@@ -12,7 +12,8 @@ const log = (message: string, data?: any) => {
   console.log(`[CreateMultipleChoiceBatch] ${message}`, data ? data : '');
 };
 
-export default function CreateMultipleChoiceBatchPage() {
+// Content component that uses search params
+function MultipleChoiceBatchContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [questions, setQuestions] = useState<MultipleChoiceQuestion[]>([]);
@@ -218,5 +219,26 @@ export default function CreateMultipleChoiceBatchPage() {
         </div>
       )}
     </div>
+  );
+}
+
+// Loading fallback component
+function MultipleChoiceLoading() {
+  return (
+    <div className="container mx-auto py-8 px-4">
+      <h1 className="text-2xl font-bold mb-6">Create Multiple Choice Questions</h1>
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    </div>
+  );
+}
+
+// Main page component with Suspense
+export default function CreateMultipleChoiceBatchPage() {
+  return (
+    <Suspense fallback={<MultipleChoiceLoading />}>
+      <MultipleChoiceBatchContent />
+    </Suspense>
   );
 } 

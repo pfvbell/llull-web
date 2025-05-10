@@ -3,7 +3,10 @@ import { createServerClient } from '@supabase/ssr'
 import { Database } from '@/types/supabase'
 
 export async function createClient() {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
+
+  // Add logging for debugging
+  console.log('Initializing Supabase server-side client')
 
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -23,7 +26,6 @@ export async function createClient() {
     }
   )
 
-  // Add logging for debugging
   console.log('Supabase server-side client initialized')
   return supabase
 } 

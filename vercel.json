@@ -1,5 +1,5 @@
 {
-  "buildCommand": "./vercel-build.sh",
+  "buildCommand": "next build",
   "installCommand": "npm install --legacy-peer-deps",
   "outputDirectory": ".next"
 } 

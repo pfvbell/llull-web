@@ -35,7 +35,15 @@ export const mockSupabase = {
   insert: jest.fn().mockReturnThis(),
   auth: {
     getUser: jest.fn().mockResolvedValue({
-      data: { user: { id: 'test-user-id' } },
+      data: {
+        user: { 
+          id: 'test-user-id',
+          app_metadata: {},
+          user_metadata: {},
+          aud: 'authenticated',
+          created_at: new Date().toISOString()
+        }
+      },
       error: null,
     }),
   },

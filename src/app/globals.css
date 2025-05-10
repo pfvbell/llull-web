@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+
+:root {
+  --background: #FAF7F2;
+  --foreground: #171717;
+  --title-color: #2D6A4F;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --title-color: #74C69D;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1, h3, h4, h5, h6 {
+  font-family: var(--font-eb-garamond);
+  color: var(--title-color);
+  font-weight: 500;
+}
+
+h2 {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--title-color);
+  font-weight: 500;
+}
+
+/* Add a utility class for any element that should look like a heading */
+.heading-font {
+  font-family: var(--font-eb-garamond);
+  color: var(--title-color);
+  font-weight: 500;
+}
+
+.debug-info {
+  display: none;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 9999;
+  /* Debug information for font usage */
+  content: "h2: sans-serif, title: EB Garamond";
+}
+
+.debug-mode .debug-info {
+  display: block;
+}

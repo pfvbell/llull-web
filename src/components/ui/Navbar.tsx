@@ -68,9 +68,9 @@ export default function Navbar() {
             </Link>
             <div className="ml-6 flex space-x-4">
               <Link
-                href="/"
+                href="/create"
                 className={`px-3 py-2 text-sm font-medium rounded-md ${
-                  pathname === '/'
+                  pathname === '/create'
                     ? 'bg-beige-100 text-blue-600'
                     : 'text-gray-700 hover:bg-beige-100'
                 }`}

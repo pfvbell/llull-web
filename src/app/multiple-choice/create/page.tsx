@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { MultipleChoiceQuestion } from '@/types/index';
 import MultipleChoiceEditor from '@/components/MultipleChoiceEditor';
@@ -13,7 +13,8 @@ const log = (message: string, data?: any) => {
   console.log(`[CreateMultipleChoice] ${message}`, data ? data : '');
 };
 
-export default function CreateMultipleChoicePage() {
+// Content component that uses search params
+function MultipleChoiceContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isCreating, setIsCreating] = useState(false);
@@ -143,5 +144,26 @@ export default function CreateMultipleChoicePage() {
         </div>
       )}
     </div>
+  );
+}
+
+// Loading fallback component
+function LoadingMultipleChoice() {
+  return (
+    <div className="container mx-auto py-8 px-4">
+      <h1 className="text-2xl font-bold mb-6">Create Multiple Choice Question</h1>
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    </div>
+  );
+}
+
+// Main page component with Suspense
+export default function CreateMultipleChoicePage() {
+  return (
+    <Suspense fallback={<LoadingMultipleChoice />}>
+      <MultipleChoiceContent />
+    </Suspense>
   );
 } 

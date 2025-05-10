@@ -18,6 +18,7 @@
     "@anthropic-ai/sdk": "^0.39.0",
     "@heroicons/react": "^2.2.0",
     "@langchain/community": "^0.3.40",
+    "@langchain/core": "^0.3.55",
     "@langchain/openai": "^0.5.5",
     "@react-oauth/google": "^0.12.1",
     "@supabase/auth-helpers-nextjs": "^0.10.0",

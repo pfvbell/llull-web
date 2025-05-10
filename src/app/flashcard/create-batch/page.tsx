@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Flashcard } from '@/types/index';
 import FlashcardEditor from '@/components/FlashcardEditor';
@@ -12,7 +12,8 @@ const log = (message: string, data?: any) => {
   console.log(`[CreateFlashcardBatch] ${message}`, data ? data : '');
 };
 
-export default function CreateFlashcardBatchPage() {
+// Create a wrapper component that uses search params
+function FlashcardBatchContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
@@ -385,5 +386,26 @@ export default function CreateFlashcardBatchPage() {
         </div>
       )}
     </div>
+  );
+}
+
+// Loading fallback component
+function FlashcardLoading() {
+  return (
+    <div className="container mx-auto py-8 px-4">
+      <h1 className="text-2xl font-bold mb-6">Create Flashcards</h1>
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    </div>
+  );
+}
+
+// Main page component with Suspense
+export default function CreateFlashcardBatchPage() {
+  return (
+    <Suspense fallback={<FlashcardLoading />}>
+      <FlashcardBatchContent />
+    </Suspense>
   );
 } 
